@@ -66,8 +66,6 @@ drinks_menu12 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: n
 
 
 
-
-
 customer1 =  Customer.create(first_last_name: "Jackie Daniels", email_address: "Jackei@aol.com", username: "Jackyyy334")
 customer2 =  Customer.create(first_last_name: "George Carlton", email_address: "GGCarl@gmail.com", username: "Georgy123")
 customer3 =  Customer.new(first_last_name: "Timmy Tuner", email_address: "TT033@yahoo.com", username: "TimmmyT03")

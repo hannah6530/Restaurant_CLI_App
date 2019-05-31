@@ -12,6 +12,7 @@ puts "3. Exit"
 
 selection = gets.chomp
 
+#
 
 def show_main_menu(new_customer)
   puts "HI #{new_customer.first_last_name}, please select from the following..."
@@ -37,6 +38,7 @@ if selection == '1'
     puts "Sorry, user not found."
 end
 
+
 elsif selection == '2'
   # binding.pry
   puts "Enter your full name."
@@ -61,9 +63,10 @@ elsif selection == '2'
 
 elsif selection == '3'
   exit(0)
+
 end
 
-
+# $current_user = user_name
 
 
 
@@ -116,11 +119,6 @@ end
 #
 
 
-
-
-
-
-
 main_menu_selection = gets.chomp
 
 
@@ -144,22 +142,33 @@ elsif main_menu_selection == '3'
   find = Restaurant.find_by_name(res_name)
   puts "The menu for #{res_name}, is as follows...."
 
-  find_a_menu = find.menus.map do |menu|
+  find_a_menu = find.menus.select do |menu|
      menu.meal
-end
+   end
   find_a_menu.each_with_index do |menu, index|
-    puts "#{index + 1}."
-    find_a_mealtype.each_with_index do |meal, index|
-      JSON.parse(menu).each_with_index do |item|
-        puts "    #{item}"
-      end
+    puts "#{index + 1}. #{menu.menu_type}"
+    JSON.parse(menu.meal).each_with_index do |item|
+      puts "    #{item}"
     end
   end
 
 
+  elsif main_menu_selection == '4'
+    see_res = Restaurant.view_all_restaurants
+    puts "Enter the name of the restaurant you would like to make an order from"
+    res_choice = gets.chomp
+    # res_instance = go to database and get restaurant instance that matches "res_choice"
+    res_instance = Restaurant.find_by_name(res_choice)
+    puts "What type of meal would you like to eat?"
+    eats = gets.chomp
+    # go to restaurnt menues (res_instance.menus) select just the menues that have menu_typ == eats
+    #ask user what they want to eat.
+    puts "What meal would you like to eat?"
+    meal_eats = gets.chomp
+    # puts "What would you like to drink"?
+    # drinks = gets.chomp
+    new_order = Order.create(menu_id: , user_id: user_name.id )
 
-elsif main_menu_selection == '7'
-    Customer.destroy_all(username: user_name)
 
 
 
@@ -194,37 +203,20 @@ elsif main_menu_selection == '6'
         new_customer.update_attribute(:username, change_username)
       end
     end
+
+
+
+
+
+elsif main_menu_selection == '7'
+    Customer.destroy_all(username: user_name)
   end
 
 
 
 
-
-
-
-  # binding.pry
-
-  # binding.pry
-
-  # res_name_menu.each do |menu|
-  #   puts "#{}"
-
-
-
 #
-# elsif main_menu_selection == '4'
-#   puts "Do you know the name of the restaurant you would like order from? (Enter yes or no)"
-#   answer = gets.chomp
-#   if (answer == 'yes')
-#     puts "Enter resturant's name"
-#     res_choice = gets.chomp
-#     view_res_menu(res_choice)
-#     puts "What type of meal would you like to eat?"
-#     eats = gets.chomp
-#     sleep(1)
-#     puts "What would you like to drink"?
-#     drinks = gets.chomp
-#     new_order = Order.create()
+
 #
 #   else
 #     puts "What is the location of the restaurant you would like to eat at?"
