@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20190529143009) do
     t.string "first_last_name"
     t.string "email_address"
     t.string "username"
+    t.string "password"
   end
 
   create_table "menus", force: :cascade do |t|

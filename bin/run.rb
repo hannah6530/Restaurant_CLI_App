@@ -1,7 +1,5 @@
 require_relative '../config/environment'
 
-# seletion = 0
-
   def login_screen
     puts "1. Login"
     puts "2. Create account"
@@ -9,13 +7,10 @@ require_relative '../config/environment'
     $selection = gets.chomp
   end
 
-
-
   puts "Hello there!!! Welcome to My Restaurant Eats. Please select from the following...."
   sleep(1)
   login_screen
   # selection = gets.chomp
-
 
 def show_main_menu(new_customer)
   sleep(1)
@@ -29,24 +24,26 @@ def show_main_menu(new_customer)
   puts "7. Delete account"
   puts "8. Return to Login Screen"
   puts "9  Signout"
-
 end
 
 sleep(1)
-
-
 
 if $selection == '1'
   sleep(1)
   puts "Enter username"
   user_name = gets.chomp
-  new_customer= Customer.find_by(username: user_name)
-  if new_customer
+  sleep(1)
+  puts "Please enter password"
+  pass_word = gets.chomp
+  new_customer = Customer.find_by(username: user_name)
+  new_cus_pass = Customer.find_by(password: pass_word)
+  if new_customer && new_cus_pass
+    sleep(1)
     show_main_menu(new_customer)
   else
+    sleep(1)
     puts "Sorry, user not found."
 end
-
 
 elsif $selection == '2'
   # binding.pry
@@ -59,24 +56,29 @@ elsif $selection == '2'
   sleep(1)
   puts "Enter your desired username."
   user_name = gets.chomp
-  new_customer = Customer.create(first_last_name: fullname, email_address: email, username: user_name)
+  # binding.pry
+  sleep(1)
+  puts "Enter a password of your choice"
+  pass_word = gets.chomp
+  new_customer = Customer.create(first_last_name: fullname, email_address: email, username: user_name,
+  password: pass_word)
   sleep(1)
   show_main_menu(new_customer)
 
-
 elsif $selection == '3'
+  sleep(1)
   exit(0)
 end
 
+
 # $current_user = user_name
-
-
 main_menu_selection = gets.chomp
-
 
 if main_menu_selection == '1'
   sleep(1)
   view = Restaurant.view_all_restaurants
+  sleep(1)
+  show_main_menu(new_customer)
 
 
 elsif main_menu_selection == '2'
@@ -88,13 +90,12 @@ elsif main_menu_selection == '2'
   res_locations.each do |restaurant|
     puts "#{restaurant.name}."
   end
-
+  sleep(1)
+  puts "Return to main menu?"
+  response = gets.chomp
+  if (response == 'yes')
     sleep(1)
-    puts" Return to main menu?"
-    response = gets.chomp
-    if (response == 'yes')
-      sleep(1)
-      show_main_menu(new_customer)
+    show_main_menu(new_customer)
   end
 
 
@@ -112,6 +113,8 @@ elsif main_menu_selection == '3'
     puts "#{index + 1}. #{menu.menu_type}"
     JSON.parse(menu.meal).each_with_index do |item|
       puts "    #{item}"
+    sleep(1)
+    show_main_menu(new_customer)
     end
   end
 
@@ -141,49 +144,70 @@ elsif main_menu_selection == '3'
 
 
 elsif main_menu_selection == '6'
-  sleep(1)
+    sleep(1)
     puts "1. View Account Informtion"
     puts "2. Change Account Information"
+    puts "3. Back to main menu"
     select = gets.chomp
     if select == '1'
       sleep(1)
       get_info = Customer.view_customer_info(user_name)
       get_info.each do |information|
         # binding.pry
+        sleep(1)
         puts "Username: #{information.username}"
         puts "First and Last Name: #{information.first_last_name}"
         puts "Email Address: #{information.email_address}"
       end
     elsif select == '2'
-      sleep(1)
-      puts "1. Change Your First and Last Name"
-      puts "2. Change Your Email Address"
-      puts "3. Change Your Username"
-      select_another = gets.chomp
-      if select_another  == '1'
+      while 1==1
         sleep(1)
-        puts "What would you like to change your name to?"
-        change_name = gets.chomp
-        new_customer.update_attribute(:first_last_name, change_name)
-      elsif select_another  == '2'
-        sleep(1)
-        puts "What would you like to change your email address to?"
-        change_email = gets.chomp
-        new_customer.update_attribute(:email_address, change_email)
-      elsif select_another  == '3'
-        sleep(1)
-        puts "What would you like to change your username to?"
-        change_username = gets.chomp
-        new_customer.update_attribute(:username, change_username)
+        puts "1. Change Your First and Last Name"
+        puts "2. Change Your Email Address"
+        puts "3. Change Your Username"
+        puts "4. Change Your Password"
+        puts "5. Back to main menu"
+        select_another = gets.chomp
+        if select_another  == '1'
+          sleep(1)
+          puts "What would you like to change your name to?"
+          change_name = gets.chomp
+          new_customer.update_attribute(:first_last_name, change_name)
+        elsif select_another  == '2'
+          sleep(1)
+          puts "What would you like to change your email address to?"
+          change_email = gets.chomp
+          new_customer.update_attribute(:email_address, change_email)
+        elsif select_another  == '3'
+          sleep(1)
+          puts "What would you like to change your username to?"
+          change_username = gets.chomp
+          new_customer.update_attribute(:username, change_username)
+        elsif select_another  == '4'
+          sleep(1)
+          puts "What would you like your new password to be?"
+          change_password = gets.chomp
+          new_customer.update_attribute(:password, change_password)
+        elsif select_another == '5'
+         sleep(1)
+         show_main_menu(new_customer)
       end
-
+    end
+  elsif select == '3'
+    sleep(1)
+    show_main_menu(new_customer)
 
 elsif main_menu_selection == '7'
     sleep(1)
     Customer.destroy_all(username: user_name)
+    sleep(1)
+    login_screen
   end
 
 elsif main_menu_selection == '8'
   sleep(1)
   login_screen
 end
+
+# elsif main_menu_selection == '8'
+# end
