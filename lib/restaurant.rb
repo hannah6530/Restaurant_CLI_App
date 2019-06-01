@@ -9,6 +9,7 @@ class Restaurant < ActiveRecord::Base
   def self.view_res_by_location(borough_city)
     Restaurant.all.select do |rest_borough|
       borough_city == rest_borough.location
+      # puts "#{restaurant_borough.name}."
     end
   end
 
