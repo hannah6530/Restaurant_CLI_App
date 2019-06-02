@@ -7,6 +7,7 @@ require_relative '../config/environment'
     $selection = gets.chomp
   end
 
+
   puts "Hello there!!! Welcome to My Restaurant Eats. Please select from the following...."
   sleep(1)
   login_screen
@@ -22,8 +23,7 @@ def show_main_menu(new_customer)
   puts "5. View all of your orders."
   puts "6. View and/or change your account information."
   puts "7. Delete account"
-  puts "8. Return to Login Screen"
-  puts "9  Signout"
+  puts "8. Signout"
 end
 
 sleep(1)
@@ -37,16 +37,21 @@ if $selection == '1'
   pass_word = gets.chomp
   new_customer = Customer.find_by(username: user_name)
   new_cus_pass = Customer.find_by(password: pass_word)
-  if new_customer && new_cus_pass
-    sleep(1)
-    show_main_menu(new_customer)
-  else
+  # binding.pry
+  if !new_customer
     sleep(1)
     puts "Sorry, user not found."
+  elsif new_customer && !new_cus_pass
+    puts "Incorrect password. Please try again"
+    sleep(1)
+    login_screen
+  else if new_customer && new_cus_pass
+    sleep(1)
+    show_main_menu(new_customer)
+  end
 end
 
 elsif $selection == '2'
-  # binding.pry
   sleep(1)
   puts "Enter your full name."
   fullname = gets.chomp
@@ -56,14 +61,21 @@ elsif $selection == '2'
   sleep(1)
   puts "Enter your desired username."
   user_name = gets.chomp
-  # binding.pry
-  sleep(1)
-  puts "Enter a password of your choice"
-  pass_word = gets.chomp
-  new_customer = Customer.create(first_last_name: fullname, email_address: email, username: user_name,
-  password: pass_word)
-  sleep(1)
-  show_main_menu(new_customer)
+  while Customer.exists?(username: user_name) do
+    sleep(1)
+    puts "This username is already taken. Please enter a different one"
+    user_name = gets.chomp
+    sleep(1)
+    break if !Customer.exists?(username: user_name)
+  end
+    sleep(1)
+    puts "Enter a password of your choice"
+    pass_word = gets.chomp
+    new_customer = Customer.create(first_last_name: fullname, email_address: email, username: user_name,
+    password: pass_word)
+    sleep(1)
+    show_main_menu(new_customer)
+
 
 elsif $selection == '3'
   sleep(1)
@@ -197,15 +209,18 @@ elsif main_menu_selection == '6'
     sleep(1)
     show_main_menu(new_customer)
 
+
 elsif main_menu_selection == '7'
-    sleep(1)
+    # sleep(1)
     Customer.destroy_all(username: user_name)
+    puts "Your account has been successfuly deleted"
     sleep(1)
     login_screen
   end
 
 elsif main_menu_selection == '8'
   sleep(1)
+  puts "You have been signed out"
   login_screen
 end
 
