@@ -10,13 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190529143009) do
+ActiveRecord::Schema.define(version: 20190602190934) do
 
   create_table "customers", force: :cascade do |t|
     t.string "first_last_name"
     t.string "email_address"
     t.string "username"
     t.string "password"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "restaurnt_id"
+    t.integer "customer_id"
   end
 
   create_table "menus", force: :cascade do |t|

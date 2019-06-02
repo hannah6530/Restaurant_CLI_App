@@ -30,6 +30,10 @@ new_restaurant11 = Restaurant.create(name: "Mcdonalds", location: "Queens")
 
 
 breakfast_menu1 = Menu.create(menu_type: "Breakfast", meal: break_fast, restaurant_id: new_restaurant2.id)
+
+
+
+
 breakfast_menu2 = Menu.create(menu_type: "Breakfast", meal: break_fast, restaurant_id: new_restaurant3.id)
 breakfast_menu3 = Menu.create(menu_type: "Breakfast", meal: break_fast, restaurant_id: new_restaurant4.id)
 breakfast_menu4 = Menu.create(menu_type: "Breakfast", meal: break_fast, restaurant_id: new_restaurant5.id)
@@ -48,9 +52,6 @@ dinner_menu6 = Menu.create(menu_type: "Dinner", meal: din_ner, restaurant_id: ne
 
 
 
-
-
-
 drinks_menu4 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: new_restaurant6.id)
 drinks_menu1 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: new_restaurant2.id)
 drinks_menu3 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: new_restaurant3.id)
@@ -63,13 +64,24 @@ drinks_menu11 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: n
 drinks_menu12 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: new_restaurant11.id)
 
 
-customer1 =  Customer.create(first_last_name: "Jackie Daniels", email_address: "Jackei@aol.com", username: "Jackyyy334")
-customer2 =  Customer.create(first_last_name: "George Carlton", email_address: "GGCarl@gmail.com", username: "Georgy123")
-customer3 =  Customer.new(first_last_name: "Timmy Tuner", email_address: "TT033@yahoo.com", username: "TimmmyT03")
-customer3 =  Customer.new(first_last_name: "Natalie Carmen", email_address: "Natalie04@yahoo.com", username: "Nat_Nat123")
-customer3 =  Customer.new(first_last_name: "Samantha Hamilton", email_address: "Sammy33@yahoo.com", username: "Sammy_H05")
+customer1 =  Customer.create(first_last_name: "Jackie Daniels", email_address: "Jackei@aol.com", username: "Jackyyy334",
+password: daniels123)
+customer2 =  Customer.create(first_last_name: "George Carlton", email_address: "GGCarl@gmail.com", username: "Georgy123",
+password: carl456)
+customer3 =  Customer.new(first_last_name: "Timmy Tuner", email_address: "TT033@yahoo.com", username: "TimmmyT03",
+password: password)
+customer3 =  Customer.new(first_last_name: "Natalie Carmen", email_address: "Natalie04@yahoo.com", username: "Nat_Nat123",
+password: natnatl)
+customer3 =  Customer.new(first_last_name: "Samantha Hamilton", email_address: "Sammy33@yahoo.com", username: "Sammy_H05",
+password: sammysosa)
 
 order1 = Order.create(menu_id: breakfast_menu1.id, customer_id: customer1.id)
 order2 = Order.create(menu_id: lunch_menu2.id, customer_id: customer2.id)
 order3 = Order.create(menu_id: dinner_menu3.id, customer_id: customer3.id)
+
+favorites1 = Favorite.create(restaurnt_id: new_restaurant4.id, customer_id: customer2.id)
+
+
+
+
 # order4 = Order.create(menu_meal: drinks_menu.meal, customer_name: customer1.first_last_name)

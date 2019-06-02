@@ -1,12 +1,11 @@
 require_relative '../config/environment'
 
   def login_screen
-    puts "1. Login"
-    puts "2. Create account"
+    puts "1. Login"  #password is incorrect for one of customer instances, and it was never changed
+    puts "2. Create account" #doesnt work
     puts "3. Exit"
     $selection = gets.chomp
   end
-
 
   puts "Hello there!!! Welcome to My Restaurant Eats. Please select from the following...."
   sleep(1)
@@ -16,14 +15,16 @@ require_relative '../config/environment'
 def show_main_menu(new_customer)
   sleep(1)
   puts "HI #{new_customer.first_last_name}, please select from the following..."
-  puts "1. View all restaurants."
-  puts "2. View all restaurants in your borough or city."
-  puts "3. View a restaurants menus."
-  puts "4. Make an order."
-  puts "5. View all of your orders."
-  puts "6. View and/or change your account information."
-  puts "7. Delete account"
-  puts "8. Signout"
+  puts "1. View all restaurants"
+  puts "2. View all restaurants in your borough or city"
+  puts "3. View a restaurants menus"
+  puts "4. Make an order"
+  puts "5. View all of your orders"
+  puts "6. Add to your favorites"
+  puts "7. View all of your favorites"
+  puts "8. View and/or change your account information"
+  puts "9. Delete account"
+  puts "10. Signout"
 end
 
 sleep(1)
@@ -51,7 +52,8 @@ if $selection == '1'
   end
 end
 
-elsif $selection == '2'
+
+elsif $selection == '2' #doesnt start
   sleep(1)
   puts "Enter your full name."
   fullname = gets.chomp
@@ -82,7 +84,6 @@ elsif $selection == '3'
   exit(0)
 end
 
-
 # $current_user = user_name
 main_menu_selection = gets.chomp
 
@@ -111,51 +112,73 @@ elsif main_menu_selection == '2'
   end
 
 
-elsif main_menu_selection == '3'
-  puts "For which resturant would you like to view its menu?"
-  # view = Restaurant.view_all_restaurants
-  res_name = gets.chomp
-  find = Restaurant.find_by_name(res_name)
-  puts "The menu for #{res_name}, is as follows...."
-  # binding.pry
-  find_a_menu = find.menus.select do |menu|
-     menu.meal
-   end
-  find_a_menu.each_with_index do |menu, index|
-    puts "#{index + 1}. #{menu.menu_type}"
-    JSON.parse(menu.meal).each_with_index do |item|
-      puts "    #{item}"
-    sleep(1)
-    show_main_menu(new_customer)
+elsif main_menu_selection == '3' #says undefined method when turning it into a method
+    puts "For which resturant would you like to view its menu?"
+    # view = Restaurant.view_all_restaurants
+    res_name = gets.chomp
+    find = Restaurant.find_by_name(res_name) #find contains the instance of the restaurnt
+    puts "The menu for #{res_name}, is as follows...."
+    # binding.pry
+    # find_a_menu = find.menus
+    find_a_menu = find.menus.select do |menu|
+       menu.meal
+     end
+    find_a_menu.each_with_index do |menu, index|
+      puts "#{index + 1}. #{menu.menu_type}"
+
+      JSON.parse(menu.meal).each_with_index do |item|
+        puts "    #{item}"
+      sleep(1)
+      show_main_menu(new_customer)
+      end
     end
-  end
 
 
   # elsif main_menu_selection == '4'
-  #   see_res = Restaurant.view_all_restaurants
-  #   puts "Enter the name of the restaurant you would like to make an order from"
-  #   res_choice = gets.chomp
-  #   # res_instance = go to database and get restaurant instance that matches "res_choice"
-  #   res_instance = Restaurant.find_by_name(res_choice)
-  #   puts "What type of meal would you like to eat?"
-  #   eats = gets.chomp
-  #   # go to restaurnt menues (res_instance.menus) select just the menues that have menu_typ == eats
-  #   #ask user what they want to eat.
-  #   puts "What meal would you like to eat?"
-  #   meal_eats = gets.chomp
-  #   # puts "What would you like to drink"?
-  #   # drinks = gets.chomp
-  #   new_order = Order.create(menu_id: , user_id: user_name.id )
+    # sleep(1)
+    # puts "What type of meal would you like to eat?"
+    # meal_eats = gets.chomp
+    # customer_eats = find.menus.select do |cus_eats| #contains the menus where the meal is equal to the customers choice(meal_eats)
+    #   cus_eats.meal == meal_eats
+    #
+    # customer_eats.each_with_index do |item|
 
-  # elsif main_menu_selection == '5'
-  #   Orders.all.each do |all_orders|
-  #
-  #
+    #get the menu instance of the restaurnt where the meal of that instance is equal to meal_eats
+      # menu.meal.select do |food|
+      #   food == meal_eats
+
+      # puts "What would you like to drink"?
+      # drinks = gets.chomp
+      # new_order = Order.create(menu_id: meal_eats.id , customer_id: new_customer.id )
+      # puts "Your order has been placed"
+      #ask customer for the meal that they want and save it to a variable
+
+
+# elsif main_menu_selection == '5'
+#   Orders.all.each do |all_orders|
+#
+#
   #
   # end
 
-
 elsif main_menu_selection == '6'
+  puts "What restaurant would you like to add to your favorites?"
+  fav_res = gets.chomp
+
+  fav = Restaurant.all.select do |res_name|
+    res_name.name == fav_res
+
+  new_favorite = Favorite.create(restaurnt_id: fav.id, customer_id: new_customer.id)
+end
+
+
+
+
+# elsif main_menu_selection == '7'
+
+
+
+elsif main_menu_selection == '8'
     sleep(1)
     puts "1. View Account Informtion"
     puts "2. Change Account Information"
@@ -209,20 +232,18 @@ elsif main_menu_selection == '6'
     sleep(1)
     show_main_menu(new_customer)
 
-
-elsif main_menu_selection == '7'
+elsif main_menu_selection == '9' #doesnt run
     # sleep(1)
     Customer.destroy_all(username: user_name)
+    sleep(1)
     puts "Your account has been successfuly deleted"
     sleep(1)
     login_screen
-  end
-
-elsif main_menu_selection == '8'
-  sleep(1)
-  puts "You have been signed out"
-  login_screen
 end
 
-# elsif main_menu_selection == '8'
-# end
+elsif main_menu_selection == '10'
+  sleep(1)
+  puts "You have been signed out"
+  sleep(1)
+  login_screen
+end
