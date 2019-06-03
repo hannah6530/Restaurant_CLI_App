@@ -1,8 +1,8 @@
 require_relative '../config/environment'
 
   def login_screen
-    puts "1. Login"  #password is incorrect for one of customer instances, and it was never changed
-    puts "2. Create account" #doesnt work
+    puts "1. Login"
+    puts "2. Create account"
     puts "3. Exit"
     $selection = gets.chomp
   end
@@ -27,6 +27,8 @@ def show_main_menu(new_customer)
   puts "10. Signout"
 end
 
+
+
 sleep(1)
 
 if $selection == '1'
@@ -36,15 +38,18 @@ if $selection == '1'
   sleep(1)
   puts "Please enter password"
   pass_word = gets.chomp
+  # binding.pry
   new_customer = Customer.find_by(username: user_name)
   new_cus_pass = Customer.find_by(password: pass_word)
   # binding.pry
-  if !new_customer
+  if new_customer == nil
     sleep(1)
-    puts "Sorry, user not found."
+    puts "Sorry, user not found. Please try again"
+    login_screen
   elsif new_customer && !new_cus_pass
     puts "Incorrect password. Please try again"
     sleep(1)
+    # binding.pry
     login_screen
   else if new_customer && new_cus_pass
     sleep(1)
@@ -94,6 +99,7 @@ if main_menu_selection == '1'
   show_main_menu(new_customer)
 
 
+
 elsif main_menu_selection == '2'
   sleep(1)
   puts "Enter borough or city"
@@ -103,13 +109,11 @@ elsif main_menu_selection == '2'
   res_locations.each do |restaurant|
     puts "#{restaurant.name}."
   end
-  sleep(1)
-  puts "Return to main menu?"
-  response = gets.chomp
-  if (response == 'yes')
     sleep(1)
     show_main_menu(new_customer)
-  end
+
+
+
 
 
 elsif main_menu_selection == '3' #says undefined method when turning it into a method
@@ -125,13 +129,12 @@ elsif main_menu_selection == '3' #says undefined method when turning it into a m
      end
     find_a_menu.each_with_index do |menu, index|
       puts "#{index + 1}. #{menu.menu_type}"
-
       JSON.parse(menu.meal).each_with_index do |item|
         puts "    #{item}"
-      sleep(1)
-      show_main_menu(new_customer)
       end
     end
+
+
 
 
   # elsif main_menu_selection == '4'
@@ -170,8 +173,6 @@ elsif main_menu_selection == '6'
 
   new_favorite = Favorite.create(restaurnt_id: fav.id, customer_id: new_customer.id)
 end
-
-
 
 
 # elsif main_menu_selection == '7'
@@ -224,13 +225,15 @@ elsif main_menu_selection == '8'
           change_password = gets.chomp
           new_customer.update_attribute(:password, change_password)
         elsif select_another == '5'
-         sleep(1)
-         show_main_menu(new_customer)
+          break
+          sleep(1)
+          show_main_menu(new_customer)
+        end
       end
-    end
   elsif select == '3'
     sleep(1)
     show_main_menu(new_customer)
+
 
 elsif main_menu_selection == '9' #doesnt run
     # sleep(1)
@@ -240,6 +243,7 @@ elsif main_menu_selection == '9' #doesnt run
     sleep(1)
     login_screen
 end
+
 
 elsif main_menu_selection == '10'
   sleep(1)
