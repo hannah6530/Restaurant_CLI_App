@@ -114,8 +114,6 @@ elsif main_menu_selection == '2'
 
 
 
-
-
 elsif main_menu_selection == '3' #says undefined method when turning it into a method
     puts "For which resturant would you like to view its menu?"
     # view = Restaurant.view_all_restaurants
@@ -133,9 +131,6 @@ elsif main_menu_selection == '3' #says undefined method when turning it into a m
         puts "    #{item}"
       end
     end
-
-
-
 
   # elsif main_menu_selection == '4'
     # sleep(1)
@@ -167,15 +162,24 @@ elsif main_menu_selection == '3' #says undefined method when turning it into a m
 elsif main_menu_selection == '6'
   puts "What restaurant would you like to add to your favorites?"
   fav_res = gets.chomp
-
-  fav = Restaurant.all.select do |res_name|
-    res_name.name == fav_res
-
+  fav = Restaurant.find_by(name: fav_res)
   new_favorite = Favorite.create(restaurnt_id: fav.id, customer_id: new_customer.id)
-end
-
+  puts "You have successfully added #{fav_res} to your favorites"
 
 # elsif main_menu_selection == '7'
+#   puts "Your favorites are as follows...."
+#   # binding.pry
+#   # view_my_favs = Favorite.view_all_favorites
+#   Favorite.all.map do |favs|
+#     favs
+#   JSON.parse(favs).each_with_index do |item|
+#       puts "#{item}"
+#
+#
+#   # view_my_favs.each do |items|
+#   #   puts "#{items.name}"
+# end
+# end
 
 
 
