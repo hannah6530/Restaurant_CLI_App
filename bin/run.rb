@@ -152,12 +152,11 @@ elsif main_menu_selection == '3' #says undefined method when turning it into a m
       #ask customer for the meal that they want and save it to a variable
 
 
-# elsif main_menu_selection == '5'
-#   Orders.all.each do |all_orders|
-#
-#
-  #
-  # end
+elsif main_menu_selection == '5'
+  my_orders = Order.all.each do |all_orders|
+    all_orders.customer_id == self.customer_id
+  end
+
 
 elsif main_menu_selection == '6'
   puts "What restaurant would you like to add to your favorites?"
