@@ -65,7 +65,7 @@ require_relative '../config/environment'
 #   puts "Enter your email address."
 #   email = gets.chomp
 #   sleep(1)
-#   puts "Enter your desired username."
+#   puts "Enter your username."
 #   user_name = gets.chomp
 #   while Customer.exists?(username: user_name) do
 #     sleep(1)
@@ -298,15 +298,6 @@ def run
   process_login
 end
 
-def get_username
-  # puts 'Enter username'
-  gets.chomp
-end
-
-def get_password
-  # puts "Please enter password"
-  gets.chomp
-end
 
 def customer_not_found
   puts 'Sorry, username and/or password combination not valid. Please try again'
@@ -322,49 +313,8 @@ def existing_user
   if customer.nil?
     customer_not_found(get_username)
   else
-    main_menu_selection(customer)
+    main_menu(customer)
   end
-end
-
-
-
-def create_account
-  # You can assign the 'get' method results to a var if you want
-  puts 'Enter username'
-  get_username
-
-    while Customer.exists?(get_username) do
-      sleep(1)
-      puts "This username is already taken. Please enter a different one"
-      get_username
-      sleep(1)
-      break if !Customer.exists?(get_username)
-    end
-
-  puts "Please enter password"
-  get_password
-
-  # customer = Customer.create(
-  #   first_last_name: get_full_name,
-  #   email_address:   get_email,
-  #   username:        get_username,
-  #   password:        get_password
-  # )
-  main_menu_selection(customer)
-end
-
-def exit_application
-  exit(0)
-end
-
-def get_full_name
-  puts 'Enter your full name.'
-  gets.chomp
-end
-
-def get_email
-  puts 'Enter your email address.'
-  gets.chomp
 end
 
 def get_username
@@ -378,10 +328,58 @@ def get_username
   username
 end
 
-def get_password
-  puts "Enter a password of your choice"
-  gets.chomp
+def verify_username
+  
+  puts 'Enter your desired username.'
+  get_username = gets.chomp
+
+  while Customer.exists?(username: get_username) do
+    puts "This username is already taken. Please enter a different one"
+    get_username = gets.chomp
+    sleep(1)
+    # break if !Customer.exists?(username: get_username)
+      break if Customer.find_by(username: username).nil?
+  end
+
 end
+
+
+
+
+def create_account
+  # You can assign the 'get' method results to a var if you want
+  puts "Enter your full name"
+  get_full_name = gets.chomp
+
+  puts 'Enter your email address'
+  get_email = gets.chomp
+
+
+  verify_username
+
+  puts "Please enter password"
+  get_password = gets.chomp
+
+  customer = Customer.create(
+    first_last_name: get_full_name,
+    email_address:   get_email,
+    username:        get_username,
+    password:        get_password
+  )
+  main_menu(customer)
+end
+
+def exit_application
+  exit(0)
+end
+
+
+
+
+# def get_password
+#   puts "Enter a password of your choice"
+#   gets.chomp
+# end
 
 def main_menu_selection
   puts "HI #{customer.first_last_name}, please select from the following..."
