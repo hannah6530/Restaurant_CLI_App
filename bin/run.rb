@@ -269,10 +269,6 @@ require_relative '../config/environment'
 
 
 
-
-
-
-
 def process_login
   case login_screen_selection
   when '1'
@@ -299,90 +295,76 @@ def run
 end
 
 
-def customer_not_found
-  puts 'Sorry, username and/or password combination not valid. Please try again'
-  login_screen
-end
-
+# def customer_not_found
+#   puts 'Sorry, username and/or password combination not valid. Please try again'
+#   login_screen_selection
+# end
+#
 
 def existing_user
+  puts "Please Enter Username"
+  get_username = gets.chomp
+
+  puts "Please Enter Password"
+  get_password = gets.chomp
+
   customer = Customer.find_by(
     username: get_username,
     password: get_password
   )
-  if customer.nil?
-    customer_not_found(get_username)
-  else
-    main_menu(customer)
+  while customer.nil? do
+    puts 'Sorry, username and/or password combination not valid. Please try again'
+    login_screen_selection
+    # break if !customer.nil?
   end
 end
-
-def get_username
-  puts 'Enter your desired username.'
-  username = gets.chomp
-  while Customer.exists?(username: username) do
-    puts "This username is already taken. Please enter a different one"
-    username = gets.chomp
-    break if Customer.find_by(username: username).nil?
-  end
-  username
-end
-
-def verify_username
-  
-  puts 'Enter your desired username.'
-  get_username = gets.chomp
-
-  while Customer.exists?(username: get_username) do
-    puts "This username is already taken. Please enter a different one"
-    get_username = gets.chomp
-    sleep(1)
-    # break if !Customer.exists?(username: get_username)
-      break if Customer.find_by(username: username).nil?
-  end
-
-end
-
-
 
 
 def create_account
-  # You can assign the 'get' method results to a var if you want
-  puts "Enter your full name"
-  get_full_name = gets.chomp
+ puts "Enter your full name"
+ get_full_name = gets.chomp
 
-  puts 'Enter your email address'
-  get_email = gets.chomp
+ puts 'Enter your email address'
+ get_email = gets.chomp
+
+ puts 'Enter your desired username.'
+ get_username = gets.chomp
 
 
-  verify_username
+ while Customer.exists?(username: get_username) do
+   puts "This username is already taken. Please enter a different one"
+   get_username = gets.chomp
+   break if !Customer.exists?(username: get_username)
+ end
 
-  puts "Please enter password"
-  get_password = gets.chomp
+ puts "Please enter password"
+ get_password = gets.chomp
 
-  customer = Customer.create(
-    first_last_name: get_full_name,
-    email_address:   get_email,
-    username:        get_username,
-    password:        get_password
-  )
-  main_menu(customer)
+ $customer = Customer.create(
+   first_last_name: get_full_name,
+   email_address:   get_email,
+   username:        get_username,
+   password:        get_password)
+
+   if $customer.errors.full_messages.empty?
+    puts "******successfully created customer*******"
+   else
+    puts "*****ok we could not create the customer*****"
+   end
+
+   main_menu($customer)
+
 end
+
+
 
 def exit_application
   exit(0)
 end
 
 
-
-
-# def get_password
-#   puts "Enter a password of your choice"
-#   gets.chomp
-# end
-
 def main_menu_selection
-  puts "HI #{customer.first_last_name}, please select from the following..."
+  puts "HI #{$customer.first_last_name}, please select from the following..."
   puts "1. View all restaurants"
   puts "2. View all restaurants in your borough or city"
   puts "3. View a restaurants menus"
