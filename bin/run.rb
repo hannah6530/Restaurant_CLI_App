@@ -303,21 +303,21 @@ end
 
 def existing_user
   puts "Please Enter Username"
-  get_username = gets.chomp
+    username = gets.chomp
 
-  puts "Please Enter Password"
-  get_password = gets.chomp
+    puts "Please Enter Password"
+    password = gets.chomp
 
-  customer = Customer.find_by(
-    username: get_username,
-    password: get_password
-  )
-  while customer.nil? do
-    puts 'Sorry, username and/or password combination not valid. Please try again'
-    login_screen_selection
-    # break if !customer.nil?
+    unless $customer = Customer.find_by(
+                        username: username,
+                        password: password
+                      )
+      puts 'Sorry, username and/or password combination not valid. Please try again'
+      process_login
+    end
+    main_menu($customer)
   end
-end
+
 
 
 def create_account
@@ -434,11 +434,11 @@ def view_restaurant_menu
   end
 end
 
-def view_orders(customer)
-  # IMO orders should have a belongs_to association with customer
-  # then you could do customer.orders
-  Order.where(customer_id: customer.id)
-end
+# def view_orders(customer)
+#    IMO orders should have a belongs_to association with customer
+#    then you could do customer.orders
+#   Order.where(customer_id: customer.id)
+# end
 
 def add_favorite_restaurant(customer)
   puts "What restaurant would you like to add to your favorites?"
