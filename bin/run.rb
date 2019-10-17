@@ -261,14 +261,6 @@ require_relative '../config/environment'
 #
 
 
-
-
-
-
-
-
-
-
 def process_login
   case login_screen_selection
   when '1'
@@ -405,7 +397,8 @@ end
 
 def view_all_restaurants
   Restaurant.view_all_restaurants
-  main_menu(customer)
+  sleep(1)
+  main_menu($customer)
 end
 
 def view_borough_or_city(customer)
@@ -432,6 +425,7 @@ def view_restaurant_menu
     puts "    #{item}"
     end
   end
+  main_menu($customer)
 end
 
 # def view_orders(customer)
@@ -462,18 +456,21 @@ def manage_account(customer)
   end
 end
 
-def display_customer_info(customer)
-  puts "Username: #{customer.username}"
-  puts "First and Last Name: #{customer.first_last_name}"
-  puts "Email Address: #{customer.email_address}"
-end
-
 def manage_account_selection
   puts "1. View Account Informtion"
   puts "2. Change Account Information"
   puts "3. Back to main menu"
   gets.chomp
 end
+
+def display_customer_info(customer)
+    puts "Username: #{customer.username}"
+    puts "First and Last Name: #{customer.first_last_name}"
+    puts "Email Address: #{customer.email_address}"
+    sleep(1)
+    manage_account($customer)
+end
+
 
 def delete_account(customer)
   # You already have a reference to the customer record, use it
@@ -515,7 +512,7 @@ end
 
 def update_email(customer)
   puts 'What would you like to change your email address to?'
-  csutomer.update!(email_address: gets.chomp)
+  customer.update!(email_address: gets.chomp)
 end
 
 def update_username(customer)
