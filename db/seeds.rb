@@ -27,13 +27,7 @@ new_restaurant9 = Restaurant.create(name: "Apple Bees", location: "Staten Island
 new_restaurant10 = Restaurant.create(name: "Popeyes", location: "Brooklyn")
 new_restaurant11 = Restaurant.create(name: "Mcdonalds", location: "Queens")
 
-
-
-
 breakfast_menu1 = Menu.create(menu_type: "Breakfast", meal: break_fast, restaurant_id: new_restaurant2.id)
-
-
-
 
 breakfast_menu2 = Menu.create(menu_type: "Breakfast", meal: break_fast, restaurant_id: new_restaurant3.id)
 breakfast_menu3 = Menu.create(menu_type: "Breakfast", meal: break_fast, restaurant_id: new_restaurant4.id)
@@ -79,7 +73,6 @@ password: "sammysosa")
 order1 = Order.create(menu_id: breakfast_menu1.id, customer_id: customer1.id)
 order2 = Order.create(menu_id: lunch_menu2.id, customer_id: customer2.id)
 order3 = Order.create(menu_id: dinner_menu3.id, customer_id: customer3.id)
-
 
 
 fav1 = Favorite.create(restaurant_id: new_restaurant2.id, customer_id: customer1.id)

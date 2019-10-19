@@ -296,10 +296,8 @@ end
 def existing_user
   puts "Please Enter Username"
     username = gets.chomp
-
     puts "Please Enter Password"
     password = gets.chomp
-
     unless $customer = Customer.find_by(
                         username: username,
                         password: password
@@ -379,7 +377,7 @@ def main_menu(customer)
   when '3'
     view_restaurant_menu
   when '4'
-    # TODO: define this
+    order(customer)
   when '5'
     view_orders(customer)
   when '6'
@@ -428,6 +426,14 @@ def view_restaurant_menu
   main_menu($customer)
 end
 
+def order(customer)
+  puts "What menu would you like to order from"
+  take_order = gets.chomp
+
+
+
+end
+
 # def view_orders(customer)
 #    IMO orders should have a belongs_to association with customer
 #    then you could do customer.orders
@@ -452,6 +458,8 @@ def view_all_favorites(customer)
   new_res = res_names.each_with_index do |fav_res_name, index|
     puts "#{index + 1}. #{fav_res_name}"
   end
+  # favorite_restaurants = Restaurant.where(id: customer.favorites.map(&:restaurant_id))
+  # puts favorite_restaurants.map(&:name)
   main_menu($customer)
 end
 
