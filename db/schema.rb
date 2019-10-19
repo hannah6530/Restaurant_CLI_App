@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20190602190934) do
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer "restaurnt_id"
+    t.integer "restaurant_id"
     t.integer "customer_id"
   end
 

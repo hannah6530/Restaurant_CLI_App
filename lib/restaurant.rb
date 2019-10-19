@@ -4,7 +4,8 @@ class Restaurant < ActiveRecord::Base
   #the location
   #list of food and drinks
   has_many :menus
-  # has_many :customers, through: :orders
+  has_many :orders 
+  has_many :customers, through: :orders
 
   def self.view_res_by_location(borough_city)
     Restaurant.all.select do |rest_borough|

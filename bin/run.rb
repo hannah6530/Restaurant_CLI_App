@@ -385,7 +385,7 @@ def main_menu(customer)
   when '6'
     add_favorite_restaurant(customer)
   when '7'
-    # TODO: define this
+    view_all_favorites(customer)
   when '8'
     manage_account(customer)
   when '9'
@@ -434,15 +434,40 @@ end
 #   Order.where(customer_id: customer.id)
 # end
 
+def view_all_favorites(customer)
+  customer_favs = customer.favorites # get favorites from customer
+
+  get_res_id = customer_favs.map do |fav_res| # get restaurant IDs from favorites
+    fav_res.restaurant_id
+  end
+
+  get_res = Restaurant.all.select do |res| # get restaurants from their IDs
+    get_res_id.include?(res.id)
+  end
+
+  res_names = get_res.map do |res| # get names from restaurants
+    res.name
+  end
+
+  new_res = res_names.each_with_index do |fav_res_name, index|
+    puts "#{index + 1}. #{fav_res_name}"
+  end
+  main_menu($customer)
+end
+
+
 def add_favorite_restaurant(customer)
   puts "What restaurant would you like to add to your favorites?"
   favorite_name = gets.chomp
   restaurant = Restaurant.find_by(name: favorite_name)
+  # binding.pry
   Favorite.create(
     restaurant_id: restaurant.id,
-    customer_id:   new_customer.id
+    customer_id: customer.id
   )
   puts "You have successfully added #{favorite_name} to your favorites"
+  sleep(2)
+  main_menu($customer)
 end
 
 def manage_account(customer)

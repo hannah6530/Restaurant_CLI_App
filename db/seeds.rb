@@ -1,6 +1,7 @@
 Restaurant.destroy_all
 Menu.destroy_all
 Order.destroy_all
+Favorite.destroy_all
 
 break_fast = ["Pancakes W/ Eggs and Bacon", "Bacon Egg and Cheese", "Oatmeal W/ Raisins", "Scrambled Eggs W/ Grits",
   "Blueberry Waffles W/ Syrup", "Chocolate Chip Pancakes W/ Sausage", "Yogurt Muffin"]
@@ -79,9 +80,10 @@ order1 = Order.create(menu_id: breakfast_menu1.id, customer_id: customer1.id)
 order2 = Order.create(menu_id: lunch_menu2.id, customer_id: customer2.id)
 order3 = Order.create(menu_id: dinner_menu3.id, customer_id: customer3.id)
 
-favorites1 = Favorite.create(restaurnt_id: new_restaurant4.id, customer_id: customer2.id)
 
 
+fav1 = Favorite.create(restaurant_id: new_restaurant2.id, customer_id: customer1.id)
+fav2 = Favorite.create(restaurant_id: new_restaurant3.id, customer_id: customer2.id)
 
 
 # order4 = Order.create(menu_meal: drinks_menu.meal, customer_name: customer1.first_last_name)
