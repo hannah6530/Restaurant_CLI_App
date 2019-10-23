@@ -377,7 +377,7 @@ def main_menu(customer)
   when '3'
     view_restaurant_menu
   when '4'
-    order(customer)
+    order
   when '5'
     view_orders(customer)
   when '6'
@@ -410,6 +410,7 @@ def view_borough_or_city(customer)
 end
 
 def view_restaurant_menu
+  binding.pry
   puts "For which resturant would you like to view its menu?"
   name = gets.chomp
   restaurant = Restaurant.find_by_name(name)
@@ -426,9 +427,35 @@ def view_restaurant_menu
   main_menu($customer)
 end
 
-def order(customer)
-  puts "What menu would you like to order from"
-  take_order = gets.chomp
+def order
+# Menu.all
+
+puts "Which restaurnt would you like to order from"
+res_choice = gets.chomp
+# restaurnt_choice = Restaurant.find_by(name: res_choice)
+if Restaurant.exists?(name: res_choice)
+   puts "You have chosen #{res_choice}, as the resturant you will order from"
+ else
+  puts "This restaurant is not available, please enter a different one"
+  res_choice = gets.chomp
+end
+
+res = Restaurant.find_by(name: res_choice)
+
+puts "What menu would you like to order from?"
+item_order = gets.chomp
+
+sleep(2)
+
+menus_with_meals = res.menus.select do |menu|
+  menu.meal
+end
+menus_with_meals.each_with_index do |menu, index|
+  puts "#{index + 1}. #{menu.menu_type}"
+  JSON.parse(menu.meal).each_with_index do |item|
+  puts "    #{item}"
+  end
+end
 
 
 

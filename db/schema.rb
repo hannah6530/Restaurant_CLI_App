@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20190602190934) do
 
   create_table "orders", force: :cascade do |t|
     t.integer "menu_id"
+    t.string  "meal_choice"
     t.integer "customer_id"
   end
 

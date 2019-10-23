@@ -29,34 +29,7 @@ new_restaurant11 = Restaurant.create(name: "Mcdonalds", location: "Queens")
 
 breakfast_menu1 = Menu.create(menu_type: "Breakfast", meal: break_fast, restaurant_id: new_restaurant2.id)
 
-breakfast_menu2 = Menu.create(menu_type: "Breakfast", meal: break_fast, restaurant_id: new_restaurant3.id)
-breakfast_menu3 = Menu.create(menu_type: "Breakfast", meal: break_fast, restaurant_id: new_restaurant4.id)
-breakfast_menu4 = Menu.create(menu_type: "Breakfast", meal: break_fast, restaurant_id: new_restaurant5.id)
-
-lunch_menu1 = Menu.create(menu_type: "Lunch", meal: lu_nch, restaurant_id: new_restaurant8.id)
-lunch_menu2 = Menu.create(menu_type: "Lunch", meal: lu_nch, restaurant_id: new_restaurant9.id)
-lunch_menu3 = Menu.create(menu_type: "Lunch", meal: lu_nch, restaurant_id: new_restaurant10.id)
-lunch_menu4 = Menu.create(menu_type: "Lunch", meal: lu_nch, restaurant_id: new_restaurant11.id)
-
-dinner_menu3 = Menu.create(menu_type: "Dinner", meal: din_ner, restaurant_id: new_restaurant10.id)
-dinner_menu1 = Menu.create(menu_type: "Dinner", meal: din_ner, restaurant_id: new_restaurant2.id)
-dinner_menu2 = Menu.create(menu_type: "Dinner", meal: din_ner, restaurant_id: new_restaurant6.id)
-dinner_menu4 = Menu.create(menu_type: "Dinner", meal: din_ner, restaurant_id: new_restaurant4.id)
-dinner_menu5 = Menu.create(menu_type: "Dinner", meal: din_ner, restaurant_id: new_restaurant7.id)
-dinner_menu6 = Menu.create(menu_type: "Dinner", meal: din_ner, restaurant_id: new_restaurant3.id)
-
-
-
 drinks_menu4 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: new_restaurant6.id)
-drinks_menu1 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: new_restaurant2.id)
-drinks_menu3 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: new_restaurant3.id)
-drinks_menu6 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: new_restaurant4.id)
-drinks_menu7 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: new_restaurant5.id)
-drinks_menu8 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: new_restaurant7.id)
-drinks_menu9 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: new_restaurant8.id)
-drinks_menu10 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: new_restaurant9.id)
-drinks_menu11 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: new_restaurant10.id)
-drinks_menu12 = Menu.create(menu_type: "Drinks", meal: drin_ks, restaurant_id: new_restaurant11.id)
 
 
 customer1 =  Customer.create(first_last_name: "Jackie Daniels", email_address: "Jackei@aol.com", username: "Jackyyy334",
@@ -70,9 +43,8 @@ password: "natnatl")
 customer3 =  Customer.new(first_last_name: "Samantha Hamilton", email_address: "Sammy33@yahoo.com", username: "Sammy_H05",
 password: "sammysosa")
 
-order1 = Order.create(menu_id: breakfast_menu1.id, customer_id: customer1.id)
-order2 = Order.create(menu_id: lunch_menu2.id, customer_id: customer2.id)
-order3 = Order.create(menu_id: dinner_menu3.id, customer_id: customer3.id)
+# order1 = Order.create(menu_id: breakfast_menu1.id, customer_id: customer1.id)
+#order will take restaurnt id, menu id, customer_id, meal(string), drink(string)
 
 
 fav1 = Favorite.create(restaurant_id: new_restaurant2.id, customer_id: customer1.id)
