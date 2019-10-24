@@ -341,9 +341,7 @@ def create_account
    else
     puts "*****ok we could not create the customer*****"
    end
-
    main_menu($customer)
-
 end
 
 
@@ -377,7 +375,7 @@ def main_menu(customer)
   when '3'
     view_restaurant_menu
   when '4'
-    order
+    order(customer)
   when '5'
     view_orders(customer)
   when '6'
@@ -427,8 +425,9 @@ def view_restaurant_menu
   main_menu($customer)
 end
 
-def order
+def order(customer)
 # Menu.all
+binding.pry
 
 puts "Which restaurnt would you like to order from"
 res_choice = gets.chomp
@@ -442,20 +441,61 @@ end
 
 res = Restaurant.find_by(name: res_choice)
 
+
 puts "What menu would you like to order from?"
 item_order = gets.chomp
 
 sleep(2)
 
-menus_with_meals = res.menus.select do |menu|
-  menu.meal
+
+menus_with_meals = res.menus.select do |food_menu|
+  # menu.meal
+  food_menu.menu_type == item_order
 end
-menus_with_meals.each_with_index do |menu, index|
-  puts "#{index + 1}. #{menu.menu_type}"
-  JSON.parse(menu.meal).each_with_index do |item|
-  puts "    #{item}"
+
+menus_with_meals.each do |menu|
+  # menu.menu_type == item_order
+  JSON.parse(menu.meal).each_with_index do |item, index|
+    puts " #{index + 1}.  #{item}"
+    end
+  end
+
+sleep(2)
+
+puts "What meal would you like to order"
+item_meal = gets.chomp
+
+menus_meals = res.menus.select do |menu|
+  if menu.meal.include?(item_meal)
+    puts "Thanks for your order"
+  else
+    puts "This restaurant does not have this selection. Please enter a different one"
   end
 end
+# #   JSON.parse(menu.meal).each_with_index do |item, index|
+# #   puts "#{item}"
+# # end
+# end
+# if res.menus.include?(item_meal)
+#   puts "true"
+# else
+#   puts "false"
+# end
+# binding.pry
+
+# puts "#{menus_meals}"
+cus_menu = Menu.find_by(menu_type: item_order)
+# binding.pry
+
+Order.create(
+  menu_id: cus_menu.id,
+  meal_choice: item_meal,
+  customer_id: customer.id
+)
+
+puts "Your order has been successfully placed!!"
+sleep(2)
+main_menu($customer)
 
 
 
